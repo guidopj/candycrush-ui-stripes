@@ -1,13 +1,14 @@
 <%@ include file="/taglibs.jsp" %>
 
+<center>
 <stripes:layout-render name="/layout.jsp" title="CandyCrush">
-
+	
 	<stripes:layout-component name="body">
 		
 		<image src="src/main/webapp/images/candy.jpg"/>
 		<h1>Bienvenido a CandyCrush</h1>
 		
-		<stripes:form beanclass="action.RegistroActionBean" focus="">
+		<stripes:form beanclass="action.LogeoActionBean" focus="">
 		<stripes:errors/>
 	
 		<table>
@@ -29,3 +30,4 @@
 	</stripes:layout-component>
 
 </stripes:layout-render>
+</center>

@@ -11,13 +11,14 @@ import repos.MundoFactory;
 import mundo.Jugador;
 
 @UrlBinding("/logeo.htm")
-public class RegistroActionBean extends BaseActionBean{
+public class LogeoActionBean extends BaseActionBean{
 
 	// **********************************************
 	// * VARIABLES
 	// **********************************************
 	
-	@Validate(required = true, minlength = 3, maxlength=15) private String nombre;	
+	@Validate(required = true, minlength = 3, maxlength=15)
+	private String nombre;	
 	
 	// **********************************************
 	// * ACCESSORS
@@ -34,31 +35,23 @@ public class RegistroActionBean extends BaseActionBean{
 	// * METODOS
 	// **********************************************
 	
-	@HandlesEvent("registrar")
-	public Resolution registrar() {		
-		if(this.elUsuarioExiste()){
-			throw new RuntimeException("El usuario ya existe");
-		}else{
-			Jugador nuevo = new Jugador(this.getNombre()); 
-			MundoFactory.getInstance().agregarJugador(nuevo); 
-			MundoFactory.getInstance().setJugadorSeleccionado(nuevo);
-			return this.abrirEditor();
-		}		
-	}
-	
 	@DefaultHandler
 	public Resolution abrirEditor(){
 		return new ForwardResolution("/editor.jsp");
 	}
 	
-	public Boolean elUsuarioExiste(){
-		return this.buscarUsuario();
+	@HandlesEvent("registrar")
+	public Resolution registrar() {		
+		if(this.elUsuarioExiste()){
+			throw new RuntimeException("El usuario ya existe");
+		}else{
+			Jugador nuevoJugador = new Jugador(this.getNombre()); 
+			MundoFactory.getInstance().agregarJugador(nuevoJugador); 
+			MundoFactory.getInstance().setJugadorSeleccionado(nuevoJugador);
+			return this.abrirEditor();
+		}		
 	}
-
-	private Boolean buscarUsuario() {
-		return MundoFactory.getInstance().buscarUsuario(this.getNombre());
-	}
-
+	
 	@HandlesEvent("logear")
 	public Resolution logear(){
 		if(this.elUsuarioExiste()){
@@ -67,6 +60,16 @@ public class RegistroActionBean extends BaseActionBean{
 		}else{
 			throw new RuntimeException("El usuario no existe");
 		}
+	}
+	
+	//Metodos auxiliares-----------------------------------------------
+	
+	private Boolean elUsuarioExiste(){
+		return this.buscarUsuario();
+	}
+
+	private Boolean buscarUsuario() {
+		return MundoFactory.getInstance().buscarUsuario(this.getNombre());
 	}
 	
 	private Jugador jugadorSeleccionado() {
