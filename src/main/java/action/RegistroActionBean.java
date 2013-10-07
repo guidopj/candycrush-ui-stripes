@@ -4,18 +4,20 @@ import net.sourceforge.stripes.action.DefaultHandler;
 import net.sourceforge.stripes.action.ForwardResolution;
 import net.sourceforge.stripes.action.HandlesEvent;
 import net.sourceforge.stripes.action.Resolution;
-import net.sourceforge.stripes.action.SessionScope;
 import net.sourceforge.stripes.action.UrlBinding;
 import net.sourceforge.stripes.validation.Validate;
 
 import repos.MundoFactory;
 import mundo.Jugador;
 
-@UrlBinding("/logeo.jsp")
-@SessionScope
+@UrlBinding("/logeo.htm")
 public class RegistroActionBean extends BaseActionBean{
 
-	@Validate(required = true, minvalue = 3, maxlength=15) private String nombre;	
+	// **********************************************
+	// * VARIABLES
+	// **********************************************
+	
+	@Validate(required = true, minlength = 3, maxlength=15) private String nombre;	
 	
 	// **********************************************
 	// * ACCESSORS
@@ -36,7 +38,6 @@ public class RegistroActionBean extends BaseActionBean{
 	public Resolution registrar() {		
 		if(this.elUsuarioExiste()){
 			throw new RuntimeException("El usuario ya existe");
-			//return this.mostrarError();
 		}else{
 			Jugador nuevo = new Jugador(this.getNombre()); 
 			MundoFactory.getInstance().agregarJugador(nuevo); 
@@ -49,12 +50,7 @@ public class RegistroActionBean extends BaseActionBean{
 	public Resolution abrirEditor(){
 		return new ForwardResolution("/editor.jsp");
 	}
-	/*
-	public Resolution mostrarError(){
-		return new ForwardResolution("/pruebaError.jsp");
-	}
-	*/
-
+	
 	public Boolean elUsuarioExiste(){
 		return this.buscarUsuario();
 	}
@@ -70,7 +66,6 @@ public class RegistroActionBean extends BaseActionBean{
 			return this.abrirEditor();
 		}else{
 			throw new RuntimeException("El usuario no existe");
-			//return this.mostrarError();
 		}
 	}
 	
