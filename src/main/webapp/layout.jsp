@@ -24,7 +24,7 @@
 <html>
   <head>
     <title>${title}</title>
-    <link rel="stylesheet" type="text/css" href="${contextPath}/css/cs_basic.css">
+    <%-- <link rel="stylesheet" type="text/css" href="${contextPath}/css/cs_basic.css"> --%>
     <stripes:layout-component name="head">
     </stripes:layout-component>
   </head>
